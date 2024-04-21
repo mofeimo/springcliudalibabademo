@@ -1,0 +1,10 @@
+server:
+    port: 7772
+spring:
+    application:
+        name: stock-service
+    cloud:
+        nacos:
+            discovery:
+                server-addr: 192.168.3.157:8848
+                namespace: public
