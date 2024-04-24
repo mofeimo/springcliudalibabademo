@@ -1,0 +1,33 @@
+server:
+    port: 7770
+spring:
+    application:
+        name: gateway
+    cloud:
+        nacos:
+            discovery:
+                server-addr: 192.168.3.157:8848
+        gateway:
+            routes:
+                -   id: order_route
+                    uri: lb://order-service
+                    predicates:
+                        - Path=/order-server/**
+                        - name: CheckAuth
+                          args:
+                            name: mqq
+                    filters:
+                        - StripPrefix=1
+                        - name: CheckAuth
+                          args:
+                            name: mqq
+            globalcors:
+                cors-configurations:
+                  '[/**]':
+                      allowed-origins: "*"
+                      allowed-methods:
+                        - GET
+                        - POST
+        sentinel:
+            transport:
+                dashboard: 127.0.0.1:8080

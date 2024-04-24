@@ -7,15 +7,23 @@ spring:
         nacos:
             discovery:
                 server-addr: 192.168.3.157:8848
-                namespace: public
         openfeign:
             client:
                 config:
-                  stock-service:
-                      logger-level: FULL
-                      connect-timeout: 5000
-                      read-timeout: 3000
-                      request-interceptors[0]: moe.mqq.interceptor.CustomFeignInterceptor
+                    stock-service:
+                        logger-level: FULL
+                        connect-timeout: 5000
+                        read-timeout: 3000
+                        request-interceptors[0]: moe.mqq.interceptor.CustomFeignInterceptor
+        sentinel:
+            enabled: true
+            eager: true
+            transport:
+                dashboard: 127.0.0.1:8080
+            web-context-unify: false
 logging:
     level:
-      moe.mqq.feign: debug
+        moe.mqq.feign: debug
+feign:
+    sentinel:
+        enabled: true
