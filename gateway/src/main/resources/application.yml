@@ -21,6 +21,18 @@ spring:
                         - name: CheckAuth
                           args:
                             name: mqq
+                -   id: order_route2
+                    uri: lb://order-seata
+                    predicates:
+                        - Path=/order-seata/**
+                    filters:
+                        - StripPrefix=1
+                -   id: ostock_route2
+                    uri: lb://stock-seata
+                    predicates:
+                        - Path=/stock-seata/**
+                    filters:
+                        - StripPrefix=1
             globalcors:
                 cors-configurations:
                   '[/**]':

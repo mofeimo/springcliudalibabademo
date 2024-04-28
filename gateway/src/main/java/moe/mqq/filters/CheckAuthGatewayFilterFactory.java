@@ -20,7 +20,7 @@ public class CheckAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<
         return (exchange, chain) -> {
             String name = exchange.getRequest().getQueryParams().getFirst("name");
 //            log.info("CheckAuthGatewayFilterFactory=="+config.name);
-            if(!config.getName().equals(name)) {
+            if(config.getName().equals(name)) {
                 return chain.filter(exchange);
             } else {
                 exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
