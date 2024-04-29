@@ -9,6 +9,7 @@ import moe.mqq.service.OrderService;
 import org.apache.skywalking.apm.toolkit.trace.Tag;
 import org.apache.skywalking.apm.toolkit.trace.Tags;
 import org.apache.skywalking.apm.toolkit.trace.Trace;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ public class OrderServiceImpl implements OrderService {
     StockService stockService;
     @Autowired
     OrderMapper mapper;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     @Override
     @GlobalTransactional
@@ -31,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
 //        map.add("productId", order.getProductId());
 //        var msg = restTemplate.postForObject("http://localhost:7071/stock/reduct", map, String.class);
         stockService.reduct(order.getProductId());
+        rabbitTemplate.convertAndSend("沫柒柒", order);
 //        int a=1/0;
         return order;
     }
